@@ -1,0 +1,26 @@
+<ion-content [fullscreen]="true" padding class="ion-text-center">
+  <img class="logo1" src="../../../assets/logo-bg.png">
+
+  <h1 class="text-format" style="font-weight: bold;">Oturum Açın</h1>
+
+  <ion-label class="text-format"> Çalışan hesabınızla giriş yapın ve iş ilanlarını görüntülemeye başlayın.</ion-label>
+
+  <ion-card>
+    <form [formGroup]="loginForm" (ngSubmit)="login()">
+      <ion-item>
+        <ion-input type="email" label="Email Adresi" formControlName="email" required></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-input type="password" label="Parola" formControlName="password" required></ion-input>
+      </ion-item>
+
+      <ion-button class="button" type="submit" shape="round">Giris Yap</ion-button>
+    </form>
+  </ion-card>
+
+  <div>
+    <p>Bir Hesabın Yok Mu?<a routerLink="/register" routerLinkActive="active"><span> Hemen Kayıt Ol.</span></a></p>
+  </div>
+
+</ion-content>

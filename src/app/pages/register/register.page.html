@@ -1,0 +1,88 @@
+<ion-content [fullscreen]="true">
+  <ion-toolbar style="display: flex; flex-direction: row;">
+        <a routerLink="/login" routerLinkActive="active" style="margin-left: 15px;"><ion-icon size="large"
+            name="return-up-back-outline"></ion-icon></a>
+        <img src="../../../assets/logo-bg.png" style="object-fit: cover; display: block; margin: auto;" height="65px">
+  </ion-toolbar>
+
+  <ion-label style="text-align: center;">
+    <h1>
+      Çalışan Kayıt Formu Adım 1/3
+    </h1>
+  </ion-label>
+
+  <div>
+    <ion-card>
+      <form [formGroup]="userForm">
+        <ion-item>
+          <ion-icon name="at-outline"></ion-icon>
+          <ion-input type="email" label="Email Adresi" formControlName="email" required></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-icon name="key-outline"></ion-icon>
+          <ion-input type="password" label="Parola" formControlName="password" required></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-icon name="key-outline"></ion-icon>
+          <ion-input type="password" label="Parola Tekrarı" formControlName="repassword" required></ion-input>
+        </ion-item>
+
+        <div style="display: flex; flex-direction: row;">
+          <ion-item>
+            <ion-input label="Ad" formControlName="name" required></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-input label="Soyad" formControlName="surname" required></ion-input>
+          </ion-item>
+        </div>
+      </form>
+
+      <form [formGroup]="registerForm">
+        <div fxLayout="row">
+          <ion-item>
+            <ion-select label="Cinsiyet" placeholder="Cinsiyet Seçiniz" formControlName="gender">
+              <ion-select-option [value]="gender"
+                *ngFor="let gender of Genders">{{EnumGender2Label[gender]}}</ion-select-option>
+            </ion-select>
+          </ion-item>
+
+          <ion-item>
+            <ion-input label="Doğum Tarihi" placeholder="GG/aa/YY" formControlName="birthDate" type="date"></ion-input>
+          </ion-item>
+
+        </div>
+      </form>
+    </ion-card>
+
+    <ion-card>
+      <form [formGroup]="infoForm">
+        <ion-item>
+          <ion-icon name="call-outline"></ion-icon>
+          <ion-input label="Telefon Numarası" formControlName="phone" placeholder="5xx..." required></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-icon name="map-outline"></ion-icon>
+          <ion-input label="Ev Adresi" formControlName="address" required></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-select label="Askerlik Durumu" placeholder="Tamamlandı" formControlName="military">
+            <ion-select-option [value]="military"
+              *ngFor="let military of MilitaryStatus">{{EnumMilitaryServiceInfo2Label[military]}}</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </form>
+    </ion-card>
+
+    <ion-button shape="round" style="float: right;" (click)="nextStep()"> Sonraki Adım
+      <ion-icon size="large" name="chevron-forward-outline"></ion-icon>
+    </ion-button>
+  </div>
+
+
+
+</ion-content>
