@@ -1,19 +1,40 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Tab 1
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">Tab 1</ion-title>
+      <ion-title size="large">Ana Sayfa</ion-title>
+      
+      <ion-label style="margin-left: 1rem; font-size: 15px; text-align: center;">
+        {{greetings}}, ilanları görüntülemeye hemen başla!
+      </ion-label>
+    
     </ion-toolbar>
   </ion-header>
 
-<ion-button (click)="testRequest()">Test Request</ion-button>
+  <ion-grid>
+    <ion-row class="ion-justify-content-start" routerLink="/tabs/tab2" routerLinkActive="active">
+      <ion-card class="ist-background" style="height: 8rem; width: 100%;" >
+        <p style="text-align: center; color: black; font-size: 20px; font-weight: bold;">İş ilanlarını Görüntüle</p>
+      </ion-card>
+    </ion-row>
 
-  <app-explore-container name="Tab 1 page"></app-explore-container>
+    <ion-row class="ion-justify-content-start" routerLink="/tabs/tab3" routerLinkActive="active">
+      <ion-card class="prof-background" style="height: 8rem; width: 100%;" >
+        <p style="text-align: center; color: white; font-size: 20px; font-weight: bold">Profilini Düzenle</p>
+      </ion-card>
+    </ion-row>
+  </ion-grid>
+
+  <div>
+    <ion-label style="font-size: 20px; font-weight: bold; margin-left: 1rem;">
+      Bildirimler
+    </ion-label>
+    <ion-badge color="danger">{{notifications.length}}</ion-badge>
+
+    <ng-container *ngFor="let notify of notifications">
+      <ion-card style="text-align: center; width: 90%; min-height: 3rem;">
+        {{notify.id}} {{notify.message}}
+      </ion-card>
+    </ng-container>
+  </div>
+
 </ion-content>

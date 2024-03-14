@@ -61,7 +61,7 @@
       <form [formGroup]="infoForm">
         <ion-item>
           <ion-icon name="call-outline"></ion-icon>
-          <ion-input label="Telefon Numarası" formControlName="phone" placeholder="5xx..." required></ion-input>
+          <ion-input label="Telefon Numarası" formControlName="phone" maxlength="10" [counter]=true placeholder="5xx..." required></ion-input>
         </ion-item>
 
         <ion-item>

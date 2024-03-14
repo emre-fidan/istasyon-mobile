@@ -41,6 +41,8 @@ export class LoginPage implements OnInit {
     this.business.LoginRequest(request).subscribe((res) => {
 
       sessionStorage.setItem("userId", res.content.userId.toString());
+      sessionStorage.setItem("name", res.content.name);
+      sessionStorage.setItem("surname", res.content.surname);
 
       this.injector.get(Router).navigate(['/tabs/tab1']);
     });

@@ -2,13 +2,13 @@ import { EnumStatus } from "../enumerations/EnumStatus";
 
 export class EmployeeDto {
 
-    public phoneNo: String;
-    public address: String;
-    public gender: String;
+    public phoneNo: string;
+    public address: string;
+    public gender: string;
     public birthDate: Date;
-    public militaryServiceInfo: String;
+    public militaryServiceInfo: string;
     public driversLicence: boolean;
-    public infoText: String;
+    public infoText: string;
     public xCoor:number;
     public yCoor:number;
 }

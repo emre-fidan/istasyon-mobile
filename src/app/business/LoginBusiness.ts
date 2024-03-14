@@ -19,7 +19,7 @@ export class LoginBusiness extends BaseBusiness{
         return this.postRequest('/login', request); 
     }
 
-    RegisterRequest(request:RegisterRequestDto):Observable<ServiceResult<String>>{
+    RegisterRequest(request:RegisterRequestDto):Observable<ServiceResult<string>>{
         return this.postRequest('/user/register/v2', request); 
     }
 }
