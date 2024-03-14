@@ -28,7 +28,7 @@ export class RegisterPage implements OnInit {
   }
 
   // loader = new Loader({
-  //   apiKey: "AIzaSyAZq_9_DBpJFOBoVsFDfXarMM8Qmt9bUdw",
+  //   apiKey: "XXX",
   //   version: "weekly"
   // });
 
