@@ -29,4 +29,10 @@ export class Tab1Page implements OnInit {
     });
   }
 
+  public removeNotification(x) {
+    let index=this.notifications.findIndex(q=>q.id==x.id);
+
+    this.notifications.splice(index,1);
+  }
+
 }

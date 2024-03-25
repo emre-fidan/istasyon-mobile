@@ -1,17 +1,102 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Tab 2
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
+<!-- <head>
+  <script src="https://code.ionicframework.com/collide/0.0.4/collide.js"></script>
+    <script src="//code.ionicframework.com/1.0.0-beta.14/js/ionic.bundle.js"></script>
+    <script src="https://code.ionicframework.com/contrib/ionic-contrib-tinder-cards/ionic.tdcards.js"></script>
+    <link rel="stylesheet" href="../../../../bower_components/ionic-ion-tinder-cards/ionic.tdcards.css">
+</head> -->
 
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">Tab 2</ion-title>
+      <ion-title size="large">İş İlanları</ion-title>
     </ion-toolbar>
   </ion-header>
 
-  <app-explore-container name="Tab 2 page"></app-explore-container>
+  <ion-toggle [(ngModel)]="isSwipeViewSelected">Kolay Görünüm</ion-toggle>
+
+  <div *ngIf="isSwipeViewSelected; else listView">
+    <ion-label>
+      Swipe View
+    </ion-label>
+    <div class="td-container" style="margin-left: 5rem;" #tdContainer>
+      <app-td-card class="td-card" *ngFor="let ad of listingJobAds" #tdCard (match)="handleMatch($event)">
+        <ion-label style="font-weight: bold;">
+          {{ad.name}}
+        </ion-label>
+
+        <div style="display: flex; flex-direction: row; justify-content: space-evenly;">
+          <ion-label style="font-weight: bold;">
+            Maaş
+          </ion-label>
+          {{ad.Salary}}
+        </div>
+
+
+        <div style="display: flex; flex-direction: row; justify-content: space-evenly;">
+          <ion-label style="font-weight: bold;">
+            Mesafe
+          </ion-label>
+          {{ad.distance}}
+        </div>
+
+        <div style="display: flex; flex-direction: row; justify-content: space-evenly;">
+          <ion-label style="font-weight: bold;">
+            Yan Haklar
+          </ion-label>
+          {{ad.benefits}}
+        </div>
+
+        <div style="display: flex; flex-direction: row; justify-content: center;">
+          <ion-button (click)="onLike()">
+            Like
+          </ion-button>
+
+          <ion-button (click)="onDiscard()">
+            Discard
+          </ion-button>
+        </div>
+      </app-td-card>
+    </div>
+  </div>
+
+  <ng-template #listView>
+    <ion-list>
+      <ion-item>
+        <ion-row class="ion-justify-content-around">
+          <ion-col>
+            İlan Adı
+          </ion-col>
+          <ion-col>
+            Maaş Aralığı
+          </ion-col>
+          <ion-col>
+            Uzaklık
+          </ion-col>
+          <ion-col>
+            Yan Haklar
+          </ion-col>
+        </ion-row>
+      </ion-item>
+
+      <ion-item *ngFor="let jobAd of listingJobAds">
+        <ion-row class="ion-justify-content-around">
+          <ion-col>
+            {{ jobAd.name }}
+          </ion-col>
+          <ion-col>
+            {{ jobAd.Salary }}
+          </ion-col>
+          <ion-col>
+            {{ jobAd.distance }}
+          </ion-col>
+          <ion-col>
+            {{ jobAd.benefits }}
+          </ion-col>
+        </ion-row>
+        <!-- <ion-label>{{ jobAd.name }}</ion-label> -->
+      </ion-item>
+
+    </ion-list>
+  </ng-template>
+
 </ion-content>

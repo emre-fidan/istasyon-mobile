@@ -10,17 +10,13 @@ import { RegisterDTO } from "../entities/DTO/RegisterDto";
 @Injectable({
     providedIn: 'root'
   })
-export class LoginBusiness extends BaseBusiness{
+export class JobAdBusiness extends BaseBusiness{
 
     constructor(http: HttpClient, injector: Injector) {
         super(http,injector);
     }
 
-    LoginRequest(request:UserDto):Observable<ServiceResult<UserDto>>{
-        return this.postRequest('/login', request); 
-    }
-
-    RegisterRequest(request:RegisterDTO):Observable<ServiceResult<object>>{
-        return this.postRequest('/user/register', request); 
+    GetJobAd():Observable<ServiceResult<Object>>{
+        return this.getRequest('job/view'); 
     }
 }

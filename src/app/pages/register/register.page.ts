@@ -5,8 +5,11 @@ import { EmployeeDto } from 'src/app/entities/DTO/EmployeeDto';
 import { RegisterRequestDto } from 'src/app/entities/DTO/RegisterRequestDto';
 import { UserDto } from 'src/app/entities/DTO/UserDto';
 import { Loader } from "@googlemaps/js-api-loader"
+import { RangeValue } from '@ionic/core';
 import { EnumGender, EnumGender2Label } from 'src/app/entities/enumerations/EnumGender';
 import { EnumMilitaryServiceInfo, EnumMilitaryServiceInfo2Label } from 'src/app/entities/enumerations/EnumMilitaryServiceInfo';
+import { RegisterDTO } from 'src/app/entities/DTO/RegisterDto';
+import { EnumEmployementType, EnumEmployementType2Label } from 'src/app/entities/enumerations/EnumEmployementType';
 
 @Component({
   selector: 'app-register',
@@ -17,12 +20,17 @@ export class RegisterPage implements OnInit {
 
   constructor(private business: LoginBusiness) { }
 
-  Genders: EnumGender[]= [EnumGender.Male, EnumGender.Female];
-  MilitaryStatus: EnumMilitaryServiceInfo[] = [EnumMilitaryServiceInfo.Exempt,EnumMilitaryServiceInfo.Completed,EnumMilitaryServiceInfo.NotCompleted];
-  public registerStepCompleted = 0;
+  Genders: EnumGender[] = [EnumGender.Male, EnumGender.Female];
+  public displayingJobTypes = ["Garson", "Bulaşıkçı", "Komi", "Aşçı"];
+  public displayingBenefits = ["Yol", "Yemek", "Prim", "İzin"];
+  WorkTypeLabels: EnumEmployementType[] = [EnumEmployementType.FullTime, EnumEmployementType.PartTime]
+  MilitaryStatus: EnumMilitaryServiceInfo[] = [EnumMilitaryServiceInfo.Exempt, EnumMilitaryServiceInfo.Completed, EnumMilitaryServiceInfo.NotCompleted];
+  
   public autocomplete = null;
+  public registerStepCompleted = 0;
+  public EnumGender2Label = EnumGender2Label;
+  public EnumEmployementType2Label = EnumEmployementType2Label;
   public EnumMilitaryServiceInfo2Label = EnumMilitaryServiceInfo2Label;
-  public EnumGender2Label= EnumGender2Label;
 
   ngOnInit() {
   }
@@ -34,8 +42,8 @@ export class RegisterPage implements OnInit {
 
   registerForm = new FormGroup(
     {
-      gender: new FormControl(Validators.required),
-      birthDate: new FormControl(Validators.required),
+      gender: new FormControl("", Validators.required),
+      birthDate: new FormControl(new Date, Validators.required),
     })
 
   userForm = new FormGroup(
@@ -56,6 +64,17 @@ export class RegisterPage implements OnInit {
     }
   )
 
+  jobPreferences = new FormGroup(
+    {
+      salaryMin: new FormControl(0, Validators.required),
+      salaryMax: new FormControl(0, Validators.required),
+      workType: new FormControl(EnumEmployementType, Validators.required),
+      jobType: new FormControl([""], Validators.required),
+      range: new FormControl(5, [Validators.required,Validators.min(5),Validators.max(50)]),
+      benefits: new FormControl([""], Validators.required),
+    }
+  )
+
   public nextStep() {
     if (!this.userForm.valid || !this.registerForm.valid) {
       // this.snackBar.open('Formu Doldurun!',"", {duration: 3000, verticalPosition:"top"});
@@ -70,6 +89,8 @@ export class RegisterPage implements OnInit {
       //this.loadGoogleAPI();
     }
     console.log(this.registerStepCompleted);
+
+    //this.sendRequest();
   }
 
   public previousStep() {
@@ -99,23 +120,32 @@ export class RegisterPage implements OnInit {
   }
 
   private sendRequest() {
-    var request = new RegisterRequestDto;
+    var request = new RegisterDTO();
     debugger
-    request.User = this.userForm.value as unknown as UserDto;
-    request.Employee = this.registerForm.value as unknown as EmployeeDto
 
-    request.Employee.militaryServiceInfo = this.infoForm.value.military;
-    request.Employee.phoneNo = this.infoForm.value.phone;
-    request.Employee.address = (document.getElementById("addressField") as HTMLInputElement).value;
+    request.name = this.userForm.value.name;
+    request.surname = this.userForm.value.surname;
+    request.email = this.userForm.value.email;
+    request.password = this.userForm.value.password;
 
-    // request.Employee.xCoor = this.autocomplete.getPlace().geometry.location.lat();
-    // request.Employee.yCoor = this.autocomplete.getPlace().geometry.location.lng();
+    request.gender = this.registerForm.value.gender;
+
+    //request.birthDate = this.formatDate(this.registerForm.value.birthDate);
+
+    request.militaryServiceInfo = this.infoForm.value.military;
+    request.phoneNo = this.infoForm.value.phone;
+    request.address = this.infoForm.value.address;
+    // request.Employee.address = (document.getElementById("addressField") as HTMLInputElement).value;
+
+    // request.xCoor = this.autocomplete.getPlace().geometry.location.lat();
+    // request.yCoor = this.autocomplete.getPlace().geometry.location.lng();
     // debugger;
 
     console.log(request);
 
     this.business.RegisterRequest(request).subscribe((res) => {
       console.log(res);
+
     })
   }
 

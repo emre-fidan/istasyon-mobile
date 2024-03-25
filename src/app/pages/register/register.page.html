@@ -1,17 +1,17 @@
 <ion-content [fullscreen]="true">
   <ion-toolbar style="display: flex; flex-direction: row;">
-        <a routerLink="/login" routerLinkActive="active" style="margin-left: 15px;"><ion-icon size="large"
-            name="return-up-back-outline"></ion-icon></a>
-        <img src="../../../assets/logo-bg.png" style="object-fit: cover; display: block; margin: auto;" height="65px">
+    <a routerLink="/login" routerLinkActive="active"><ion-icon size="large"
+        name="return-up-back-outline"></ion-icon></a>
+    <img src="../../../assets/logo-bg.png" style="object-fit: cover; display: block; margin: auto;" height="65px">
   </ion-toolbar>
 
-  <ion-label style="text-align: center;">
-    <h1>
-      Çalışan Kayıt Formu Adım 1/3
-    </h1>
-  </ion-label>
+  <div *ngIf="registerStepCompleted==0">
+    <ion-label style="text-align: center;">
+      <h1>
+        Çalışan Kayıt Formu Adım 1/3
+      </h1>
+    </ion-label>
 
-  <div>
     <ion-card>
       <form [formGroup]="userForm">
         <ion-item>
@@ -61,7 +61,8 @@
       <form [formGroup]="infoForm">
         <ion-item>
           <ion-icon name="call-outline"></ion-icon>
-          <ion-input label="Telefon Numarası" formControlName="phone" maxlength="10" [counter]=true placeholder="5xx..." required></ion-input>
+          <ion-input label="Telefon Numarası" formControlName="phone" maxlength="10" [counter]=true placeholder="5xx..."
+            required></ion-input>
         </ion-item>
 
         <ion-item>
@@ -83,6 +84,64 @@
     </ion-button>
   </div>
 
+  <div *ngIf="registerStepCompleted==1">
+    <ion-label style="text-align: center;">
+      <h1>
+        Çalışan Kayıt Formu Adım 2/3
+      </h1>
+    </ion-label>
 
+    <ion-card>
+      <form [formGroup]="jobPreferences">
+        <div style="display: flex; flex-direction: row;">
+          <ion-item>
+            <ion-input label="Maaş Başlangıç" formControlName="salaryMin" required></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-input label="Maaş Bitiş" formControlName="salaryMax" required></ion-input>
+          </ion-item>
+        </div>
+
+        <ion-item>
+          <ion-select label="Meslek Tercihi" placeholder="Meslek Seçiniz" formControlName="jobType" [multiple]="false">
+            <ion-select-option [value]="jobType"
+              *ngFor="let jobType of displayingJobTypes">{{jobType}}</ion-select-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-item>
+          <ion-select label="Çalışma Tercihi" placeholder="Lütfen Seçiniz" formControlName="workType">
+            <ion-select-option [value]="workType" *ngFor="let workType of WorkTypeLabels">{{EnumEmployementType2Label[workType]}}</ion-select-option>
+          </ion-select>
+        </ion-item>
+
+      </form>
+    </ion-card>
+
+    <ion-card>
+      <form [formGroup]="jobPreferences">
+        <div style="display: flex; flex-direction: row; align-items: center;">
+          <ion-item style="width: 90%;">
+            <ion-range label="Mesafe" min="5" max="50" formControlName="range" [pin]="true"></ion-range>
+          </ion-item>
+
+          <ion-label style="width: 10%; margin-right: 15px;" >{{jobPreferences.value.range}} km</ion-label>
+        </div>
+
+        <ion-item>
+          <ion-select label="Yan Haklar" placeholder="Lütfen Seçim Yapın" formControlName="benefits" [multiple]="true">
+            <ion-select-option [value]="benefits"
+              *ngFor="let benefits of displayingBenefits">{{benefits}}</ion-select-option>
+          </ion-select>
+        </ion-item>
+
+      </form>
+    </ion-card>
+
+    <ion-button shape="round" style="float: right;" (click)="nextStep()"> Sonraki Adım
+      <ion-icon size="large" name="chevron-forward-outline"></ion-icon>
+    </ion-button>
+  </div>
 
 </ion-content>

@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { AccountBusiness } from 'src/app/business/AccountBusiness';
+import { JobAdBusiness } from 'src/app/business/JobAdBusiness';
 
 @Component({
   selector: 'app-tab3',
@@ -7,6 +9,14 @@ import { Component } from '@angular/core';
 })
 export class Tab3Page {
 
-  constructor() {}
+  constructor(private business: JobAdBusiness) {}
 
+
+  public async logout(){
+    document.cookie.replace("Auth-B","");
+
+    this.business.GetJobAd().subscribe((x)=>{
+      console.log(x);
+    });
+  }
 }
